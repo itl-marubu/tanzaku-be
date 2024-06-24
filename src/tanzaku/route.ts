@@ -12,11 +12,6 @@ type TanzakuType = {
   nameLine: string
 }
 
-type TanzakuDeleteType = {
-  tanzakuId: string
-  visibility: boolean
-}
-
 tanzaku.post("/:id/new", async(c) => {
   const adapter = new PrismaD1(c.env.CHUO_TANZAK)
   const prisma = new PrismaClient({ adapter })
