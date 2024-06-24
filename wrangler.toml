@@ -1,0 +1,10 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "tanzak-backend"
+main = "src/index.ts"
+compatibility_date = "2024-06-20"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "CHUO_TANZAK" # i.e. available in your Worker on env.DB
+database_name = "CHUO_TANZAK"
+database_id = "09a42ca4-aad4-4691-b1d2-57a3204f237e"
