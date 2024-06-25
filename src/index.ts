@@ -29,6 +29,16 @@ app.use(
   ) => jwt({ secret: c.env.TOKEN_KEY })(c, next),
 )
 
+app.use(
+  "/tanzakus/del/*",
+  async (
+    c: Context<{
+      Bindings: Bindings
+    }>,
+    next: Next,
+  ) => jwt({ secret: c.env.TOKEN_KEY })(c, next),
+)
+
 app.route("/projects", projects)
 app.route("/admin", users)
 app.route("/tanzaku", tanzaku)

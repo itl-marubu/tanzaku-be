@@ -1,15 +1,24 @@
 import sanitizeHtml from 'sanitize-html';
 import { ngwords } from './ngwords';
 
-export const sanitizer = (input: string, max: number) => {
+export const sanitizer = (input: string, max: number): [
+  string,
+  boolean
+] => {
   const clean = sanitizeHtml(input, {
     allowedTags: [],
     allowedAttributes: {},
   });
-  if (ngwords.includes(clean)) {
-    return "";
+  const [sanitized, hasNg] = sanitizeString(clean, ngwords);
+  return [hanZen(sanitized).slice(0, max), hasNg];
+}
+function sanitizeString(clean: string, ngWords: string[]): [string, boolean] {
+  for (const ngWord of ngWords) {
+    if (clean.includes(ngWord)) {
+      return ["", true];
+    }
   }
-  return hanZen(clean).slice(0, max);
+  return [clean, false];
 }
 
 const hanZen = (str: string) => {

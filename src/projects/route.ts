@@ -53,7 +53,7 @@ projects.get("/:id/list", async(c) => {
 
   const id = c.req.param("id") || ""
 
-  const result = await prisma.tanzakuTxt.findFirst({
+  const result = await prisma.tanzakuTxt.findMany({
     where: {
       projectId: id
     }
