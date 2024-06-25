@@ -34,6 +34,8 @@ paths:
             text/plain:
               schema:
                 $ref: '#/components/schemas/Error500'
+      security:
+        - bearerAuth: []
   /admin/login:
     post:
       operationId: signIn
@@ -175,8 +177,7 @@ paths:
             text/plain:
               schema:
                 $ref: '#/components/schemas/Error500'
-      security:
-        - bearerAuth: []
+
 
   /tanzaku/del/{tanzakuId}:
     delete:
@@ -212,6 +213,9 @@ components:
   schemas:
     AccountRegistrationRequest:
       type: object
+      required:
+        - email
+        - password
       properties:
         email:
           type: string
