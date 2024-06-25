@@ -20,8 +20,8 @@ export const createToken = async (payload: sessionPayload, secret: string) => {
   return jwt
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setIssuer("https://ferrisidp.mock.mizphses.com")
-    .setAudience("https://ferrisidp.mock.mizphses.com")
+    .setIssuer("https://tanzak-backend.fuminori.workers.dev")
+    .setAudience("https://tanzak-backend.fuminori.workers.dev")
     .setExpirationTime("2h")
     .sign(signKey)
 }
@@ -30,8 +30,8 @@ export const verifyToken = async (token: string, secret: string) => {
   const verifyKey = new TextEncoder().encode(secret)
   const { payload } = await jwtVerify(token, verifyKey, {
     algorithms: ["HS256"],
-    issuer: "https://ferrisidp.mock.mizphses.com",
-    audience: "https://ferrisidp.mock.mizphses.com",
+    issuer: "https://tanzak-backend.fuminori.workers.dev",
+    audience: "https://tanzak-backend.fuminori.workers.dev",
   })
 
   return payload as sessionPayload
