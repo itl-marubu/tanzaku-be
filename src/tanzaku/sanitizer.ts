@@ -1,4 +1,4 @@
-import * as sanitizeHtml from 'sanitize-html';
+import sanitizeHtml from 'sanitize-html';
 import { ngwords } from './ngwords';
 
 export const sanitizer = (input: string, max: number) => {
