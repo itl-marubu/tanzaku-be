@@ -18,11 +18,15 @@ tanzaku.post("/:id/new", async(c) => {
   const id = c.req.param("id")
 
   const body = await c.req.json<TanzakuType>()
-  const tl1 = sanitizer(body.textLine1, 8)
-  const tl2 = body.textLine2 ? sanitizer(body.textLine2, 8) : undefined
-  const nl = sanitizer(body.nameLine, 10)
+  const [tl1, ng1] = sanitizer(body.textLine1, 8)
+  const [tl2, ng2] = body.textLine2 ? sanitizer(body.textLine2, 8) : [undefined, false]
+  const [nl, ng3] = sanitizer(body.nameLine, 10)
 
-  const tanzakuData = prisma.tanzakuTxt.create({
+  if (ng1 || ng2 || ng3) {
+    return c.json({ error: "Invalid input" }, 400)
+  }
+
+  const tanzakuData = await prisma.tanzakuTxt.create({
     data: {
       textLine1: tl1,
       textLine2: tl2,
@@ -34,7 +38,7 @@ tanzaku.post("/:id/new", async(c) => {
   return c.json(tanzakuData)
   })
 
-tanzaku.delete("/:tanzaku/del", async(c) => {
+tanzaku.delete("/del/:tanzaku", async(c) => {
   const adapter = new PrismaD1(c.env.CHUO_TANZAK)
   const prisma = new PrismaClient({ adapter })
   const tanzaku = c.req.param("tanzaku")
@@ -50,12 +54,12 @@ tanzaku.delete("/:tanzaku/del", async(c) => {
   if (tanzakuBaseData) {
     return c.json({ error: "Tanzaku not found or locked" }, 400)
   }
-  const tanzakuData = prisma.tanzakuTxt.update({
+  const tanzakuData = await prisma.tanzakuTxt.update({
     where: {
       id: tanzaku
     },
     data: {
-      disabled: false,
+      disabled: true,
     }
   })
 

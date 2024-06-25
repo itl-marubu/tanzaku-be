@@ -10,12 +10,6 @@ import tanzaku from "./tanzaku/route"
 
 const app = new Hono<{ Bindings: Bindings }>()
 
-
-
-app.route("/projects", projects)
-app.route("/admin", users)
-app.route("/tanzaku", tanzaku)
-
 app.use(
   "/*",
   cors({
@@ -34,4 +28,19 @@ app.use(
     next: Next,
   ) => jwt({ secret: c.env.TOKEN_KEY })(c, next),
 )
+
+app.use(
+  "/tanzakus/del/*",
+  async (
+    c: Context<{
+      Bindings: Bindings
+    }>,
+    next: Next,
+  ) => jwt({ secret: c.env.TOKEN_KEY })(c, next),
+)
+
+app.route("/projects", projects)
+app.route("/admin", users)
+app.route("/tanzaku", tanzaku)
+
 export default app

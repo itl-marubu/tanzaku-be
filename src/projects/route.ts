@@ -47,4 +47,19 @@ projects.get("/list", async(c) => {
   return c.json(result)
 })
 
+projects.get("/:id/list", async(c) => {
+  const adapter = new PrismaD1(c.env.CHUO_TANZAK)
+  const prisma = new PrismaClient({ adapter })
+
+  const id = c.req.param("id") || ""
+
+  const result = await prisma.tanzakuTxt.findMany({
+    where: {
+      projectId: id
+    }
+  })
+
+  return c.json(result)
+})
+
 export default projects

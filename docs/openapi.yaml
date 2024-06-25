@@ -178,7 +178,7 @@ paths:
       security:
         - bearerAuth: []
 
-  /tanzaku/{tanzakuId}/del:
+  /tanzaku/del/{tanzakuId}:
     delete:
       operationId: deleteTanzaku
       tags:
@@ -198,7 +198,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TanzakuSchema'
+                $ref: '#/components/schemas/TanzakuResponseSchema'
         '500':
           description: Internal Server Error
           content:
@@ -215,55 +215,60 @@ components:
       properties:
         email:
           type: string
-          example: "example@example.com"
+          example: 'example@example.com'
         password:
           type: string
-          example: "password"
+          example: 'password'
     AccountRegistrationResponse:
       type: object
       properties:
         email:
           type: string
-          example: "example@example.com"
+          example: 'example@example.com'
     LoginRequest:
       type: object
       properties:
         email:
           type: string
-          example: "example@example.com"
+          example: 'example@example.com'
         password:
           type: string
-          example: "password"
+          example: 'password'
     SignInTokenResponse:
       type: object
       properties:
         token:
           type: string
-          example: "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImhvZ2VAZ21haWwuY2..."
+          example: 'eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImhvZ2VAZ21haWwuY2...'
     AddProjectRequest:
       type: object
       properties:
         name:
           type: string
-          example: "Project Name"
+          example: 'Project Name'
         description:
           type: string
-          example: "Project Description"
+          example: 'Project Description'
     ProjectSchema:
       type: object
+      required:
+        - id
+        - name
+        - description
+        - ownerId
       properties:
         id:
           type: string
-          example: "clxrat7xl0001xd2txfzakzz9"
+          example: 'clxrat7xl0001xd2txfzakzz9'
         name:
           type: string
-          example: "Project Name"
+          example: 'Project Name'
         description:
           type: string
-          example: "Project Description"
+          example: 'Project Description'
         ownerId:
           type: string
-          example: "clxrat7xl0001xd2txfzakzz9"
+          example: 'clxrat7xl0001xd2txfzakzz9'
     ProjectSchemaArray:
       type: array
       items:
@@ -271,47 +276,60 @@ components:
 
     TanzakuSchema:
       type: object
+      required:
+        - textLine1
+        - nameLine
+        - projectId
       properties:
         textLine1:
           type: string
-          example: "短冊で"
+          example: '短冊で'
           maximum: 8
         textLine2:
           type: string
-          example: "ザクザク"
+          example: 'ザクザク'
           maximum: 8
         nameLine:
           type: string
-          example: "山田太郎"
+          example: '山田太郎'
           maximum: 16
     TanzakuResponseSchema:
       type: object
+      required:
+        - id
+        - textLine1
+        - nameLine
+        - projectId
+        - disabled
       properties:
         id:
           type: string
-          example: "clxrat7xl0001xd2txfzakzz9"
+          example: 'clxrat7xl0001xd2txfzakzz9'
         textLine1:
           type: string
-          example: "短冊で"
+          example: '短冊で'
           maximum: 8
         textLine2:
           type: string
-          example: "ザクザク"
+          example: 'ザクザク'
           maximum: 8
         nameLine:
           type: string
-          example: "山田太郎"
+          example: '山田太郎'
           maximum: 16
         projectId:
           type: string
-          example: "clxrat7xl0001xd2txfzakzz9"
+          example: 'clxrat7xl0001xd2txfzakzz9'
+        disabled:
+          type: boolean
+          example: false
     TanzakuSchemaArray:
       type: array
       items:
-        $ref: '#/components/schemas/TanzakuSchema'
+        $ref: '#/components/schemas/TanzakuResponseSchema'
     Error500:
       type: string
-      example: "Internal Server Error"
+      example: 'Internal Server Error'
   securitySchemes:
     bearerAuth:
       type: http
