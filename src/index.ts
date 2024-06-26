@@ -7,6 +7,7 @@ import { cors } from "hono/cors"
 import type { Context, Next } from "hono"
 import { jwt } from "hono/jwt"
 import tanzaku from "./tanzaku/route"
+import pubProjects from "./pubProject/route"
 
 const app = new Hono<{ Bindings: Bindings }>()
 
@@ -50,6 +51,7 @@ app.use(
 )
 
 app.route("/projects", projects)
+app.route("/pub", pubProjects)
 app.route("/admin", users)
 app.route("/tanzaku", tanzaku)
 
