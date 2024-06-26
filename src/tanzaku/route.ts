@@ -38,6 +38,22 @@ tanzaku.post("/:id/new", async(c) => {
   return c.json(tanzakuData)
   })
 
+tanzaku.get("/:id/list", async(c) => {
+  const adapter = new PrismaD1(c.env.CHUO_TANZAK)
+  const prisma = new PrismaClient({ adapter })
+  const id = c.req.param("id")
+
+  const tanzakuData = await prisma.tanzakuTxt.findMany({
+    where: {
+      projectId: id,
+      disabled: false,
+      locked: false
+    }
+  })
+
+  return c.json(tanzakuData)
+})
+
 tanzaku.delete("/del/:tanzaku", async(c) => {
   const adapter = new PrismaD1(c.env.CHUO_TANZAK)
   const prisma = new PrismaClient({ adapter })
