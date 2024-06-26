@@ -62,4 +62,28 @@ projects.get("/:id/list", async(c) => {
   return c.json(result)
 })
 
+projects.delete("/:id", async(c) => {
+  const adapter = new PrismaD1(c.env.CHUO_TANZAK)
+  const prisma = new PrismaClient({ adapter })
+
+  const id = c.req.param("id") || ""
+
+  // fkで紐づいているtanzakuTxtも削除される
+
+  const tanzakuData = await prisma.tanzakuTxt.deleteMany({
+    where: {
+      projectId: id
+    }
+  })
+
+
+  const result = await prisma.project.delete({
+    where: {
+      id
+    }
+  })
+
+  return c.json(result)
+})
+
 export default projects
