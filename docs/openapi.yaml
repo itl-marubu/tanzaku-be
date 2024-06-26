@@ -34,6 +34,8 @@ paths:
             text/plain:
               schema:
                 $ref: '#/components/schemas/Error500'
+      security:
+        - bearerAuth: []
   /admin/login:
     post:
       operationId: signIn
@@ -268,6 +270,9 @@ components:
   schemas:
     AccountRegistrationRequest:
       type: object
+      required:
+        - email
+        - password
       properties:
         email:
           type: string
