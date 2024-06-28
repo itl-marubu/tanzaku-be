@@ -11,6 +11,8 @@ erDiagram
   String name
   String description "nullable"
   String ownerId FK
+  String noticeLarge "nullable"
+  String noticeQR "nullable"
   DateTime createdAt
   DateTime updatedAt
 }
@@ -45,6 +47,8 @@ erDiagram
   - `name`: 
   - `description`: 
   - `ownerId`: 
+  - `noticeLarge`: 
+  - `noticeQR`: 
   - `createdAt`: 
   - `updatedAt`: 
 
