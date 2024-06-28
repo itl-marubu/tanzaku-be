@@ -85,7 +85,7 @@ tanzaku.get("/:id/show", async(c) => {
         id: tanzaku.id
       },
       data: {
-        shown: true
+        shown: status?.toString() === "true" ? false : true
       }
     })
   }
