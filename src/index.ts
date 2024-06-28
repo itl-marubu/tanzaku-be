@@ -15,39 +15,9 @@ app.use(
   "/*",
   cors({
     origin: "*",
-    allowMethods: ["GET", "POST", "PUT", "DELETE"],
+    allowMethods: ["GET", "POST", "PATCH", "DELETE"],
     allowHeaders: ["Content-Type", "Authorization"],
   }),
-)
-
-app.use(
-  "/projects/*",
-  async (
-    c: Context<{
-      Bindings: Bindings
-    }>,
-    next: Next,
-  ) => jwt({ secret: c.env.TOKEN_KEY })(c, next),
-)
-
-app.use(
-  "/tanzakus/del/*",
-  async (
-    c: Context<{
-      Bindings: Bindings
-    }>,
-    next: Next,
-  ) => jwt({ secret: c.env.TOKEN_KEY })(c, next),
-)
-
-app.use(
-  "/admin/new",
-  async (
-    c: Context<{
-      Bindings: Bindings
-    }>,
-    next: Next,
-  ) => jwt({ secret: c.env.TOKEN_KEY })(c, next),
 )
 
 app.route("/projects", projects)

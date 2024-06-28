@@ -13,7 +13,7 @@ type ProjectType = {
   noticeQR?: string
 }
 
-projects.post("/add", async(c) => {
+projects.post("/", async(c) => {
   const adapter = new PrismaD1(c.env.CHUO_TANZAK)
   const prisma = new PrismaClient({ adapter })
 
@@ -33,7 +33,7 @@ projects.post("/add", async(c) => {
   return c.json(result)
 })
 
-projects.get("/list", async(c) => {
+projects.get("/", async(c) => {
   const adapter = new PrismaD1(c.env.CHUO_TANZAK)
   const prisma = new PrismaClient({ adapter })
 
@@ -49,7 +49,7 @@ projects.get("/list", async(c) => {
   return c.json(result)
 })
 
-projects.get("/:id/list", async(c) => {
+projects.get("/:id", async(c) => {
   const adapter = new PrismaD1(c.env.CHUO_TANZAK)
   const prisma = new PrismaClient({ adapter })
 
@@ -64,7 +64,7 @@ projects.get("/:id/list", async(c) => {
   return c.json(result)
 })
 
-projects.put("/:id", async(c) => {
+projects.patch("/:id", async(c) => {
   const adapter = new PrismaD1(c.env.CHUO_TANZAK)
   const prisma = new PrismaClient({ adapter })
 
