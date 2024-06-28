@@ -141,9 +141,43 @@ paths:
             text/plain:
               schema:
                 $ref: '#/components/schemas/Error500'
+    put:
+      operationId: updateProject
+      tags:
+        - Projects
+      summary: Update Project
+      description: Update a project by ID
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          description: ID of the project to get
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddProjectRequest'
+      responses:
+        '200':
+          description: Project found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectSchema'
+        '500':
+          description: Internal Server Error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Error500'
+      security:
+        - bearerAuth: []
   /projects/{projectId}/list:
     get:
-      operationId: getProject
+      operationId: getAllProjects
       tags:
         - Projects
       summary: Get Project
@@ -365,6 +399,12 @@ components:
         description:
           type: string
           example: 'Project Description'
+        noticeLarge:
+          type: string
+          example: 'Notice shown largely'
+        noticeQR:
+          type: string
+          example: 'Notice shown beside QR'
     ProjectSchema:
       type: object
       required:
@@ -382,6 +422,12 @@ components:
         description:
           type: string
           example: 'Project Description'
+        noticeLarge:
+          type: string
+          example: 'Notice shown largely'
+        noticeQR:
+          type: string
+          example: 'Notice shown beside QR'
         ownerId:
           type: string
           example: 'clxrat7xl0001xd2txfzakzz9'

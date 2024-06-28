@@ -9,6 +9,8 @@ const projects = new Hono<{ Bindings: Bindings }>()
 type ProjectType = {
   name: string
   description?: string
+  noticeLarge?: string
+  noticeQR?: string
 }
 
 projects.post("/add", async(c) => {
@@ -62,6 +64,29 @@ projects.get("/:id/list", async(c) => {
   return c.json(result)
 })
 
+projects.put("/:id", async(c) => {
+  const adapter = new PrismaD1(c.env.CHUO_TANZAK)
+  const prisma = new PrismaClient({ adapter })
+
+  const id = c.req.param("id") || ""
+
+  const data = await c.req.json<ProjectType>()
+
+  const result = await prisma.project.update({
+    where: {
+      id
+    },
+    data: {
+      name: data.name,
+      description: data.description,
+      noticeLarge: data.noticeLarge,
+      noticeQR: data.noticeQR
+    }
+  })
+
+  return c.json(result)
+})
+
 projects.delete("/:id", async(c) => {
   const adapter = new PrismaD1(c.env.CHUO_TANZAK)
   const prisma = new PrismaClient({ adapter })
@@ -70,7 +95,7 @@ projects.delete("/:id", async(c) => {
 
   // fkで紐づいているtanzakuTxtも削除される
 
-  const tanzakuData = await prisma.tanzakuTxt.deleteMany({
+  await prisma.tanzakuTxt.deleteMany({
     where: {
       projectId: id
     }
