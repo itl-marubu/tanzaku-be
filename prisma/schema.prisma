@@ -48,6 +48,7 @@ model TanzakuTxt {
   projectId String
   disabled  Boolean  @default(false)
   locked    Boolean  @default(false)
+  shown     Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   createdBy String?

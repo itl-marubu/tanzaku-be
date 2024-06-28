@@ -29,6 +29,7 @@ erDiagram
   String projectId FK
   Boolean disabled
   Boolean locked
+  Boolean shown
   DateTime createdAt
   DateTime updatedAt
   String createdBy "nullable"
@@ -66,6 +67,7 @@ erDiagram
   - `projectId`: 
   - `disabled`: 
   - `locked`: 
+  - `shown`: 
   - `createdAt`: 
   - `updatedAt`: 
   - `createdBy`: 

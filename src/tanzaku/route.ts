@@ -54,6 +54,33 @@ tanzaku.get("/:id/list", async(c) => {
   return c.json(tanzakuData)
 })
 
+
+tanzaku.post("/:id/show", async(c) => {
+  const adapter = new PrismaD1(c.env.CHUO_TANZAK)
+  const prisma = new PrismaClient({ adapter })
+  const id = c.req.param("id")
+  const status = await c.env.TANZAKU_STATUS.get("status") || "false"
+  const tanzakuData = await prisma.tanzakuTxt.findMany({
+    where: {
+      projectId: id,
+      disabled: false,
+      locked: false,
+      shown: status?.toString() === "true" ? true : false
+    },
+    take: 10,
+  })
+
+  if (tanzakuData.length === 0) {
+    if (status?.toString() === "true") {
+      await c.env.TANZAKU_STATUS.put("status", "false")
+    } else {
+      await c.env.TANZAKU_STATUS.put("status", "true")
+    }
+    return c.json({ error: "All tanzakus are shown. Resetting" }, 500)
+  }
+  return c.json(tanzakuData)
+})
+
 tanzaku.delete("/del/:tanzaku", async(c) => {
   const adapter = new PrismaD1(c.env.CHUO_TANZAK)
   const prisma = new PrismaClient({ adapter })
