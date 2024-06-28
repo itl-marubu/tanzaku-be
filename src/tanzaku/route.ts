@@ -78,6 +78,17 @@ tanzaku.get("/:id/show", async(c) => {
     }
     return c.json({ error: "All tanzakus are shown. Resetting" }, 500)
   }
+
+  for (const tanzaku of tanzakuData) {
+    await prisma.tanzakuTxt.update({
+      where: {
+        id: tanzaku.id
+      },
+      data: {
+        shown: true
+      }
+    })
+  }
   return c.json(tanzakuData)
 })
 
