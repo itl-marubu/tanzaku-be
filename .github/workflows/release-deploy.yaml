@@ -2,6 +2,12 @@ name: Release Production
 
 on:
   workflow_dispatch:
+    inputs:
+      with_d1:
+        description: 'DBの変更もデプロイする'
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   id-token: write
@@ -81,6 +87,7 @@ jobs:
   db-deploy:
     runs-on: ubuntu-latest
     name: D1 Deploy
+    if: ${{ github.event.inputs.with_d1 == 'true' }}
     steps:
       - uses: actions/checkout@v4
       - name: Install Node.js
