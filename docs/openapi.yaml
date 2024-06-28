@@ -263,6 +263,34 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error500'
 
+  /tanzaku/{projectId}/show:
+    get:
+      operationId: getTanzakuPicked
+      tags:
+        - Tanzaku
+      summary: Get Tanzaku
+      description: 短冊を１０個古い順に取ってくるやつ
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          description: ID of the project to get
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Project found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TanzakuSchemaArray'
+        '500':
+          description: Internal Server Error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Error500'
+
   /tanzaku/del/{tanzakuId}:
     delete:
       operationId: deleteTanzaku
