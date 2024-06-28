@@ -12,7 +12,7 @@ type TanzakuType = {
   nameLine: string
 }
 
-tanzaku.post("/:id/new", async(c) => {
+tanzaku.post("/:id", async(c) => {
   const adapter = new PrismaD1(c.env.CHUO_TANZAK)
   const prisma = new PrismaClient({ adapter })
   const id = c.req.param("id")
@@ -38,24 +38,7 @@ tanzaku.post("/:id/new", async(c) => {
   return c.json(tanzakuData)
   })
 
-tanzaku.get("/:id/list", async(c) => {
-  const adapter = new PrismaD1(c.env.CHUO_TANZAK)
-  const prisma = new PrismaClient({ adapter })
-  const id = c.req.param("id")
-
-  const tanzakuData = await prisma.tanzakuTxt.findMany({
-    where: {
-      projectId: id,
-      disabled: false,
-      locked: false
-    }
-  })
-
-  return c.json(tanzakuData)
-})
-
-
-tanzaku.get("/:id/show", async(c) => {
+tanzaku.get("/:id", async(c) => {
   const adapter = new PrismaD1(c.env.CHUO_TANZAK)
   const prisma = new PrismaClient({ adapter })
   const id = c.req.param("id")
@@ -92,7 +75,7 @@ tanzaku.get("/:id/show", async(c) => {
   return c.json(tanzakuData)
 })
 
-tanzaku.delete("/del/:tanzaku", async(c) => {
+tanzaku.delete("/:tanzaku", async(c) => {
   const adapter = new PrismaD1(c.env.CHUO_TANZAK)
   const prisma = new PrismaClient({ adapter })
   const tanzaku = c.req.param("tanzaku")
@@ -114,6 +97,35 @@ tanzaku.delete("/del/:tanzaku", async(c) => {
     },
     data: {
       disabled: true,
+    }
+  })
+
+  return c.json(tanzakuData)
+})
+
+
+tanzaku.patch("/:tanzaku", async(c) => {
+  const adapter = new PrismaD1(c.env.CHUO_TANZAK)
+  const prisma = new PrismaClient({ adapter })
+  const tanzaku = c.req.param("tanzaku")
+
+  const tanzakuBaseData = await prisma.tanzakuTxt.findUnique({
+    where: {
+      id: tanzaku
+    }
+  }).then((data) => {
+    return data?.locked
+  })
+
+  if (tanzakuBaseData) {
+    return c.json({ error: "Tanzaku not found or locked" }, 400)
+  }
+  const tanzakuData = await prisma.tanzakuTxt.update({
+    where: {
+      id: tanzaku
+    },
+    data: {
+      disabled: false,
     }
   })
 
