@@ -1,8 +1,9 @@
-import { Hono } from "hono"
+import { Context, Hono, Next } from "hono"
 import { Bindings } from "../bindings"
 import { PrismaClient } from "@prisma/client"
 import { PrismaD1 } from "@prisma/adapter-d1"
 import { sanitizer } from "./sanitizer"
+import { jwt } from "hono/jwt"
 
 const tanzaku = new Hono<{ Bindings: Bindings }>()
 
@@ -11,6 +12,23 @@ type TanzakuType = {
   textLine2?: string
   nameLine: string
 }
+
+
+tanzaku.use(
+  "/*",
+  async (
+    c: Context<{
+      Bindings: Bindings
+    }>,
+    next: Next,
+  ) => {
+    if (c.req.method === "GET" || c.req.method === "POST") {
+      return next()
+    }
+    return jwt({ secret: c.env.TOKEN_KEY })(c, next)
+  },
+)
+
 
 tanzaku.post("/:id", async(c) => {
   const adapter = new PrismaD1(c.env.CHUO_TANZAK)

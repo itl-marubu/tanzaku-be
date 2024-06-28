@@ -1,12 +1,24 @@
-import { Hono } from "hono"
+import { Context, Hono, Next } from "hono"
 import { sha3_512 } from "js-sha3"
 import { createId } from "@paralleldrive/cuid2"
 import { PrismaD1 } from "@prisma/adapter-d1"
 import { PrismaClient } from "@prisma/client"
 import { createToken } from "./jwt"
 import type { Bindings } from "../bindings"
+import { jwt } from "hono/jwt"
 
 const users = new Hono<{ Bindings: Bindings }>()
+
+users.use(
+  "/new",
+  async (
+    c: Context<{
+      Bindings: Bindings
+    }>,
+    next: Next,
+  ) => jwt({ secret: c.env.TOKEN_KEY })(c, next),
+)
+
 
 users.post("/new", async (c) => {
   const adapter = new PrismaD1(c.env.CHUO_TANZAK)
