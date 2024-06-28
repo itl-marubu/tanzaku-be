@@ -55,7 +55,7 @@ tanzaku.get("/:id/list", async(c) => {
 })
 
 
-tanzaku.post("/:id/show", async(c) => {
+tanzaku.get("/:id/show", async(c) => {
   const adapter = new PrismaD1(c.env.CHUO_TANZAK)
   const prisma = new PrismaClient({ adapter })
   const id = c.req.param("id")
