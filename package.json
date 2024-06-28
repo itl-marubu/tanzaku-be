@@ -21,6 +21,7 @@
     "migrate:remote": "wrangler d1 migrations apply CHUO_TANZAK --remote",
     "gen": "run-p gen:*",
     "gen:client": "prisma generate",
+    "seed:dev": "node ./prisma/seed.js",
     "type-check": "tsc --noEmit",
     "prepare": "husky"
   },

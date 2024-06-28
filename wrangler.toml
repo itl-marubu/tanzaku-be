@@ -8,3 +8,7 @@ compatibility_flags = ["nodejs_compat"]
 binding = "CHUO_TANZAK" # i.e. available in your Worker on env.DB
 database_name = "CHUO_TANZAK"
 database_id = "09a42ca4-aad4-4691-b1d2-57a3204f237e"
+
+[[kv_namespaces]]
+binding = "TANZAKU_STATUS"
+id = "3001ecec91de4fc49f68f1d8eac294a1"
