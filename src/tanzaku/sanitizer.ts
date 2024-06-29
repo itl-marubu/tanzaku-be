@@ -12,7 +12,7 @@ export const sanitizer = (input: string, max: number): [
   const [sanitized, hasNg] = sanitizeString(clean, ngwords);
   return [hanZen(sanitized).slice(0, max), hasNg];
 }
-function sanitizeString(clean: string, ngWords: string[]): [string, boolean] {
+export const sanitizeString = (clean: string, ngWords: string[]): [string, boolean] => {
   for (const ngWord of ngWords) {
     if (clean.includes(ngWord)) {
       return ["", true];
