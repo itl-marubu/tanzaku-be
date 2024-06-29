@@ -18,6 +18,9 @@ export const sanitizeString = (clean: string, ngWords: string[]): [string, boole
       return ["", true];
     }
   }
+  if (/^[\d\s]*$/.test(clean)) {
+    return ["", true];
+  }
   return [clean, false];
 }
 
