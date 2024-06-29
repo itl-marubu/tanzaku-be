@@ -37,9 +37,9 @@ tanzaku.post("/:id", async(c) => {
 
   const body = await c.req.json<TanzakuType>()
   const [tl1, ng1] = sanitizer(body.textLine1, 8)
-  const [tl2, ng2] = body.textLine2 ? sanitizer(body.textLine2, 8) : [undefined, false]
+  const [tl2, ng2] = body.textLine2 ? sanitizer(body.textLine2, 8) : ["", false]
   const [nl, ng3] = sanitizer(body.nameLine, 10)
-  const [_, ng4] = sanitizer(`${body.textLine1}${body.textLine2}${body.nameLine}`, 10)
+  const [_, ng4] = sanitizer(`${tl1}${tl2}${nl}${tl1}${nl}${tl1[0]}${tl2[0]}${nl[0]}`, 10000)
 
   if (ng1 || ng2 || ng3 || ng4) {
     return c.json({ error: "Invalid input" }, 400)
