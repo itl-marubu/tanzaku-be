@@ -145,8 +145,8 @@ paths:
       operationId: getAllProjects
       tags:
         - Projects
-      summary: Get Project
-      description: Get a project by ID
+      summary: Get Tanzaku All
+      description: Get a tanzakus by ID
       parameters:
         - name: projectId
           in: path
@@ -223,6 +223,48 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProjectSchema'
+        '500':
+          description: Internal Server Error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Error500'
+      security:
+        - bearerAuth: []
+
+  /projects/{projectId}/{tanzakuId}/{nums}:
+    get:
+      operationId: getTanzaku
+      tags:
+        - projects
+      summary: Get Tanzaku with pagenation
+      description: Get a tanzaku by ID
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          description: ID of the project to get
+          schema:
+            type: string
+        - name: tanzakuId
+          in: path
+          required: true
+          description: ID of the tanzaku to get
+          schema:
+            type: string
+        - name: nums
+          in: path
+          required: true
+          description: Number of tanzakus to get
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Project found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TanzakuSchemaArray'
         '500':
           description: Internal Server Error
           content:
