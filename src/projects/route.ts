@@ -1,8 +1,9 @@
-import { Hono } from "hono"
+import { Context, Hono, Next } from "hono"
 import { Bindings } from "../bindings"
 import { PrismaClient } from "@prisma/client"
 import { PrismaD1 } from "@prisma/adapter-d1"
 import {verifyToken} from "../admin/jwt"
+import { jwt } from "hono/jwt"
 
 const projects = new Hono<{ Bindings: Bindings }>()
 
@@ -12,6 +13,20 @@ type ProjectType = {
   noticeLarge?: string
   noticeQR?: string
 }
+
+
+projects.use(
+  "/*",
+  async (
+    c: Context<{
+      Bindings: Bindings
+    }>,
+    next: Next,
+  ) => {
+    return jwt({ secret: c.env.TOKEN_KEY })(c, next)
+  },
+)
+
 
 projects.post("/", async(c) => {
   const adapter = new PrismaD1(c.env.CHUO_TANZAK)
@@ -63,6 +78,29 @@ projects.get("/:id", async(c) => {
 
   return c.json(result)
 })
+
+
+projects.get("/:projId/:tanzId/:nums", async(c) => {
+  const adapter = new PrismaD1(c.env.CHUO_TANZAK)
+  const prisma = new PrismaClient({ adapter })
+
+  const projId = c.req.param("projId") || ""
+  const tanzakuId =  c.req.param("tanzId") || ""
+  const nums = Number(c.req.param("nums")) || 20
+
+  const result = await prisma.tanzakuTxt.findMany({
+    where: {
+      projectId: projId
+    },
+    cursor: {
+      id: tanzakuId
+    },
+    take: nums + 1
+  })
+
+  return c.json(result)
+})
+
 
 projects.patch("/:id", async(c) => {
   const adapter = new PrismaD1(c.env.CHUO_TANZAK)
