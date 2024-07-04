@@ -15,6 +15,6 @@ jobs:
       # this is pipeline is about releasing the go module and binary
       scan-args: |-
         --experimental-licenses-summary
-        ----experimental-licenses="BSD-3-Clause,Apache-2.0,MIT"
+        --experimental-licenses="BSD-3-Clause,Apache-2.0,MIT"
         ./
       upload-sarif: false
