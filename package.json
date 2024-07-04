@@ -26,30 +26,30 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "@cloudflare/vitest-pool-workers": "^0.4.6",
+    "@cloudflare/vitest-pool-workers": "^0.4.8",
     "@cloudflare/workers-types": "^4.20240620.0",
     "@paralleldrive/cuid2": "^2.2.2",
-    "@prisma/adapter-d1": "^5.15.1",
+    "@prisma/adapter-d1": "^5.16.1",
     "@types/sanitize-html": "^2.11.0",
     "husky": "^9.0.11",
-    "jose": "^5.4.1",
+    "jose": "^5.6.3",
     "js-sha3": "^0.9.3",
-    "npm-run-all2": "^6.2.0",
-    "prisma": "^5.15.1",
+    "npm-run-all2": "^6.2.1",
+    "prisma": "^5.16.1",
     "prisma-markdown": "^1.0.9",
     "sanitize-html": "^2.13.0",
-    "typescript": "^5.5.2",
+    "typescript": "^5.5.3",
     "vitest": "1.5.0",
-    "wrangler": "^3.61.0"
+    "wrangler": "^3.63.0"
   },
   "volta": {
     "node": "20.14.0"
   },
   "packageManager": "pnpm@9.4.0+sha256.b6fd0bfda555e7e584ad7e56b30c68b01d5a04f9ee93989f4b93ca8473c49c74",
   "dependencies": {
-    "@hono/zod-openapi": "^0.14.5",
+    "@hono/zod-openapi": "^0.14.7",
     "@prisma/client": "5.15.1",
     "biome": "^0.3.3",
-    "hono": "^4.4.7"
+    "hono": "^4.4.11"
   }
 }
