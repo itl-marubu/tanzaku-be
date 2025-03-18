@@ -6,7 +6,6 @@ runs:
     - name: Set VOLTA_FEATURE_PNPM
       shell: bash
       run: export VOLTA_FEATURE_PNPM=1
-  
     - uses: volta-cli/action@v4
     - name: Install Package Manager
       shell: bash
@@ -18,8 +17,6 @@ runs:
       shell: bash
       run: |
         pnpm install
-
-
     - name: Generate files
       run: pnpm run gen
       shell: bash
